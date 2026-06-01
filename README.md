@@ -2,11 +2,11 @@
 
 Automated, verified network change deployment with rollback, built on a containerized BGP/OSPF lab.
 
-**Status:** In development. Phase 0 complete — a 4-node FRR ring running OSPF, converged with verified end-to-end reachability, reproducible from config. The deployment/verification engine is the next phase.
+**Status:** In development. Phase 0 complete - a 4-node FRR ring running OSPF, converged with verified end-to-end reachability, reproducible from config. The deployment/verification engine is the next phase.
 
 ## Why
 
-Network changes often go out without a way to predict their effect, and recovery after a bad change is manual and slow. SafeDeploy is an exploration of applying software deployment discipline — pre-change validation, post-change verification, automatic rollback — to routing changes, and of a harder question most rollback systems punt on: how to tell a change that *succeeded* from one that succeeded but quietly degraded the network.
+Network changes often go out without a way to predict their effect, and recovery after a bad change is manual and slow. SafeDeploy is an exploration of applying software deployment discipline - pre-change validation, post-change verification, automatic rollback - to routing changes, and of a harder question most rollback systems punt on: how to tell a change that *succeeded* from one that succeeded but quietly degraded the network.
 
 ## Architecture
 
@@ -33,7 +33,7 @@ Planned: config snapshot/restore, automated deploy, verify-then-rollback, Batfis
 
 ## Engineering log
 
-Phase 0 was not a clean first pass. The debugging — daemons, kernel-level link state, config persistence, and a single-node failure — is written up honestly in [`docs/PHASE0-LOG.md`](docs/PHASE0-LOG.md), since how the network was brought up is more informative than the fact that it runs.
+Phase 0 was not a clean first pass. The debugging — daemons, kernel-level link state, config persistence, and a single-node failure - is written up honestly in [`docs/PHASE0-LOG.md`](docs/PHASE0-LOG.md), since how the network was brought up is more informative than the fact that it runs.
 
 ## Repo layout
 

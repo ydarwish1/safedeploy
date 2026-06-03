@@ -123,3 +123,25 @@ a watchdog recovery in this session. Before claiming fully hands-off
 reproducibility, this needs to be verified: destroy, deploy fresh, and confirm
 all four converge with no manual step. Until then, reproducibility is "comes up
 from config, with a possible per-node daemon recovery on r4."
+
+## Update — cold-start reproducibility (resolved)
+
+The "known open item" (cold deploy not reliably bringing all nodes up) was
+investigated and resolved. Two distinct causes were found:
+
+1. OSPF `network` statements under `router ospf` intermittently failed to bind
+   to interfaces at startup (interface-readiness race). Fixed by switching to
+   interface-level syntax: `ip ospf area 0` on each interface, plus an explicit
+   `ospf router-id` per node. This binds reliably regardless of startup order.
+
+2. A separate startup race in the `frrouting/frr:latest` image (a dev build,
+   8.4_git) where one random node's zebra loses the startup race and fails to
+   apply its addresses. Mitigated with a post-deploy health check (`deploy.sh`)
+   that detects any node missing its config and restarts FRR on just that node.
+
+Result: `./deploy.sh` now brings the full 4-node ring up with all eight
+adjacencies Full, verified across repeated cold deploys.
+
+Tracked follow-up: pin a stable FRR image (e.g. quay.io/frrouting/frr:10.x off
+the `:latest` dev build) to address cause #2 at the source rather than
+mitigating it. Deferred so as not to block forward progress.

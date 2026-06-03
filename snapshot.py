@@ -30,7 +30,7 @@ CONTAINER_PREFIX = "clab-safedeploy-"
 COMMANDS = {
     "running_config": "show running-config",
     "ospf_neighbors": "show ip ospf neighbor",
-    "ospf_interfaces": "show ip ospf interface brief",
+    "ospf_interfaces": "show ip ospf interface",
     "routes": "show ip route",
     "interfaces": "show interface brief",
 }

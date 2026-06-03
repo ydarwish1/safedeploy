@@ -4,3 +4,4 @@
 clab-safedeploy/
 __pycache__/
 *.pyc
+snapshots/

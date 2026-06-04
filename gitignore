@@ -1,0 +1,10 @@
+*.pem
+*.key
+.env
+clab-safedeploy/
+__pycache__/
+*.pyc
+snapshots/
+baselines/
+deploy_records/
+bf_snapshot/

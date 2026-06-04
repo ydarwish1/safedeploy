@@ -50,7 +50,6 @@ def get_interface_subnets(router):
     cfg = get_config(router)
     subnets = {}
     current_if = None
-    has_ip = {}
     has_ospf = {}
     ip_of = {}
     for line in cfg.splitlines():
@@ -63,7 +62,6 @@ def get_interface_subnets(router):
             mip = re.match(r"ip address (\d+\.\d+\.\d+\.\d+)/(\d+)", s)
             if mip:
                 ip_of[current_if] = (mip.group(1), int(mip.group(2)))
-                has_ip[current_if] = True
             if s == "ip ospf area 0":
                 has_ospf[current_if] = True
             if s == "shutdown":
@@ -101,7 +99,7 @@ def build_topology():
 
 # --- connectivity analysis on the model ----------------------------------
 def is_connected(graph):
-    """Is every router reachable from r1 (is the graph one component)?"""
+    """Is every router reachable from the first node (one component)?"""
     if not graph:
         return False
     start = next(iter(graph))

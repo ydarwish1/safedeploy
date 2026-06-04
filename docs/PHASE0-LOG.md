@@ -145,3 +145,13 @@ adjacencies Full, verified across repeated cold deploys.
 Tracked follow-up: pin a stable FRR image (e.g. quay.io/frrouting/frr:10.x off
 the `:latest` dev build) to address cause #2 at the source rather than
 mitigating it. Deferred so as not to block forward progress.
+
+## Update - startup race fixed at source
+
+The tracked follow-up (pin a stable FRR image) is done. Switched all four nodes
+from frrouting/frr:latest (a dev build, 8.4_git) to the stable release
+quay.io/frrouting/frr:10.3.1. Cold deploys now come up with all eight
+adjacencies Full on the first try, with no per-node FRR restart needed. The
+deploy.sh health check is retained as a harmless safety net, but in practice
+no longer fires. Root cause was the dev-image startup ordering; a stable release
+initializes reliably.

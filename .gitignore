@@ -5,3 +5,5 @@ clab-safedeploy/
 __pycache__/
 *.pyc
 snapshots/
+baselines/
+deploy_records/

@@ -56,6 +56,34 @@ def full_neighbor_count(router):
     return sum(1 for line in out.splitlines() if "Full" in line)
 
 
+def bgp_established_count(router):
+    """Count BGP peers in Established state.
+
+    In 'show ip bgp summary', the State/PfxRcd column holds a NUMBER when the
+    session is Established (prefixes received) and a WORD (Active/Idle/Connect)
+    when it is not. So an Established peer is a neighbor line whose state token
+    is an integer.
+    """
+    out = vtysh(router, "show ip bgp summary")
+    count = 0
+    for line in out.splitlines():
+        # neighbor lines start with an IP address
+        if re.match(r"\d+\.\d+\.\d+\.\d+", line.strip()):
+            cols = line.split()
+            # State/PfxRcd is the column before PfxSnt; find the token that is
+            # the up/down timer, the state is the field right after it.
+            # Simpler and robust: Established lines have a numeric token at the
+            # position 9 (0-indexed) in standard FRR output.
+            # We detect Established by: the line contains a time-like token
+            # (NN:NN:NN) and the token after it is an integer.
+            for i, tok in enumerate(cols):
+                if re.match(r"\d+:\d+:\d+$", tok) and i + 1 < len(cols):
+                    if cols[i + 1].isdigit():
+                        count += 1
+                    break
+    return count
+
+
 def next_hops(router, dst_ip):
     out = vtysh(router, f"show ip route {dst_ip}")
     if f"{dst_ip}/32 is directly connected" in out or "Loopback" in out:
@@ -176,6 +204,19 @@ def verify_path(intent, r):
                 f"actual fib paths: {paths}")
 
 
+def verify_bgp(intent, r):
+    section = intent.get("bgp", {})
+    mine = section.get("min_established", {})
+    if not mine:
+        return
+    print("bgp:")
+    for router, required in mine.items():
+        actual = bgp_established_count(router)
+        r.check(actual >= required,
+                f"{router} has >= {required} Established BGP peers",
+                f"actual Established peers: {actual}")
+
+
 def main():
     try:
         with open("intent.yml") as f:
@@ -189,6 +230,7 @@ def main():
     verify_control_plane(intent, r)
     verify_reachability(intent, r)
     verify_path(intent, r)
+    verify_bgp(intent, r)
 
     total = r.passed + r.failed
     print(f"\n=== {r.passed}/{total} intent checks passed ===")

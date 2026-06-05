@@ -21,3 +21,12 @@ reachability:
 # (Router-name path, start to finish. ECMP: any equal-cost path matching counts.)
 path:
   - {src: r1, dst: r2, expect: [r1, r2]}
+
+# BGP: each router must have all its iBGP peers in Established state.
+# Full mesh of 4 routers = every router peers with the other 3.
+bgp:
+  min_established:
+    r1: 3
+    r2: 3
+    r3: 3
+    r4: 3

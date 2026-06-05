@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SafeDeploy Phase 8 - Intent verification.
+SafeDeploy Phase 6 - Intent verification.
 
 The inversion that ties the project together: instead of "apply a change and
 check some things," this declares the network's DESIRED STATE in intent.yml and

@@ -1,4 +1,4 @@
-# Phase 0 — Build & Debugging Log
+# Phase 0 - Build & Debugging Log
 
 Goal of Phase 0: stand up a 4-node FRRouting ring (r1–r4) on Containerlab/EC2,
 running OSPF in area 0, with every adjacency Full and verified end-to-end

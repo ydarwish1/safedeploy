@@ -55,7 +55,7 @@ Each phase is documented honestly, including the bugs and how they were diagnose
 
 ## Repo layout
 
-\`\`\`
+```
 deploy.sh              # deploy the lab + self-heal FRR startup race
 topology.clab.yml      # containerlab topology; binds configs into each node
 snapshot.py            # Phase 1: read-only network state snapshot -> JSON
@@ -70,4 +70,4 @@ docs/                  # per-phase engineering logs (PHASE0-7)
 snapshots/             # runtime output (gitignored)
 baselines/             # runtime output (gitignored)
 deploy_records/        # runtime output (gitignored)
-\`\`\`
+```

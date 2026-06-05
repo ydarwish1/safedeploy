@@ -1,0 +1,23 @@
+# SafeDeploy intent: the desired state of the network, declared.
+# verify_intent.py checks live reality against every assertion here.
+
+# Control plane: each router must hold at least this many Full OSPF adjacencies.
+# In a 4-node ring, every router has exactly 2 neighbors, so 2 = fully converged.
+control_plane:
+  min_neighbors:
+    r1: 2
+    r2: 2
+    r3: 2
+    r4: 2
+
+# Reachability: each source loopback must reach each destination loopback,
+# and the forwarding path must be no longer than max_hops routers.
+reachability:
+  - {src: r1, dst: r3, max_hops: 3}
+  - {src: r2, dst: r4, max_hops: 3}
+  - {src: r1, dst: r2, max_hops: 2}
+
+# Path policy: specific flows whose forwarding path must match exactly.
+# (Router-name path, start to finish. ECMP: any equal-cost path matching counts.)
+path:
+  - {src: r1, dst: r2, expect: [r1, r2]}

@@ -4,6 +4,13 @@ Automated, verified network change deployment with rollback, built on a containe
 
 **Status:** In active development. Phases 0 through 7 complete: a reproducible 4-node FRR network running OSPF with an iBGP overlay, a read-only state-snapshot tool, a config-change engine, an automatic verify-then-rollback deployment pipeline, an offline pre-flight change validator, data-plane path verification, and a declarative intent-verification layer covering both protocols.
 
+> **Note (in progress):** I'm building the next major phase, a multi-change
+> "convergence gate" that checks several proposed changes together, not just one at
+> a time, so changes that each look safe alone but break the network in combination
+> get caught before they're applied. The longer-term goal is to let multiple
+> autonomous agents propose changes concurrently while this gate keeps them safe.
+> This is a larger build, so the repo may sit at Phase 7 while that work is underway.
+
 ## Why
 
 Network changes often go out without a way to predict their effect, and recovery after a bad change is manual and slow. SafeDeploy applies software deployment discipline (pre-change validation, post-change verification, automatic rollback) to routing changes. It also takes on a harder question most rollback systems punt on: how to tell a change that succeeded from one that succeeded but quietly degraded the network.

@@ -9,7 +9,10 @@ Automated, verified network change deployment with rollback, built on a containe
 > a time, so changes that each look safe alone but break the network in combination
 > get caught before they're applied. The longer-term goal is to let multiple
 > autonomous agents propose changes concurrently while this gate keeps them safe.
-> This is a larger build, so the repo may sit at Phase 7 while that work is underway.
+> The current idea is agents never write to the network directly, they propose
+> intents, and the gate alone decides what is applied, verified, and rolled back.
+> This ensures AI is out of the write path by design. This is a larger build,
+> so the repo may sit at Phase 7 while that work is underway.
 
 ## Why
 

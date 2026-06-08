@@ -36,13 +36,11 @@ extends NetPilot's principle (the LLM is barred from the write path) from
 diagnosis to change.
 
 ## Direction and learning goal
-I'm using Cisco's CCIE Automation v1.2 blueprint, Domain 1, Objective 1.6,
-"Design a network automation solution that leverages AI to provide agentic
-capabilities, conversational interfaces, and/or data processing," as a north
-star for where I'm taking this project, this is where the future is heading!
-This isn't a claim that the project meets an expert-level standard; in fact
-far from it, but it's the direction I'm deliberately building toward!
-Reference: https://ccie-automation.com/blueprint
+This is where network automation is heading: AI agents that can propose and
+reason about network changes, with humans and safety systems keeping them in
+check. I'm building toward that intentionally, starting with the convergence
+gate. This isn't a claim the project is there yet; far from it, but it's the
+direction I'm deliberately working toward!
 
 ## Status log
 - *2026-06-08* - Roadmap created; designing the intent schema and joint-check

@@ -4,15 +4,9 @@ Automated, verified network change deployment with rollback, built on a containe
 
 **Status:** In active development. Phases 0 through 7 complete: a reproducible 4-node FRR network running OSPF with an iBGP overlay, a read-only state-snapshot tool, a config-change engine, an automatic verify-then-rollback deployment pipeline, an offline pre-flight change validator, data-plane path verification, and a declarative intent-verification layer covering both protocols.
 
-> **Note (in progress):** I'm building the next major phase, a multi-change
-> "convergence gate" that checks several proposed changes together, not just one at
-> a time, so changes that each look safe alone but break the network in combination
-> get caught before they're applied. The longer-term goal is to let multiple
-> autonomous agents propose changes concurrently while this gate keeps them safe.
-> The current idea is agents never write to the network directly, they propose
-> intents, and the gate alone decides what is applied, verified, and rolled back.
-> This ensures AI is out of the write path by design. This is a larger build,
-> so the repo may sit at Phase 7 while that work is underway.
+> **In progress:** The next phase is a multi-change "convergence gate" for safe
+> multi-agent network automation. See [ROADMAP.md](ROADMAP.md) for the future
+> design, direction, and progress.
 
 ## Why
 

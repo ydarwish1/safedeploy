@@ -1,0 +1,34 @@
+# SafeDeploy CI: the six offline suites run on every push and pull request.
+# They need no lab, no Docker, and no API key - the device layer and the LLM
+# are mocked at module boundaries, so a green badge means the schema validation,
+# partition math, gate mechanics, healing loop, adversarial audit, and impact
+# math are all sound.
+name: tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  offline-suites:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile every module
+        run: python -m py_compile *.py
+      - name: Proposal schema validation
+        run: python test_proposal.py
+      - name: Joint pre-flight partition math
+        run: python test_joint.py
+      - name: Convergence gate mechanics
+        run: python test_gate.py
+      - name: Self-healing loop (mocked LLM and lab)
+        run: python test_heal.py
+      - name: Red team exhaustive gate audit
+        run: python test_redteam.py
+      - name: Blast radius impact math
+        run: python test_blastradius.py

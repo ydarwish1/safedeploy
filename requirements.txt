@@ -1,0 +1,3 @@
+# SafeDeploy runtime dependencies (the dashboard needs nothing at all).
+pyyaml>=6.0        # intent.yml parsing (verify_intent.py)
+anthropic>=0.40    # AI agent layer only (agents.py, watcher.py heal loop)

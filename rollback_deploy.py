@@ -148,7 +148,17 @@ def run_health_checks():
     }
 
 
-def wait_for_health(timeout=45, interval=5):
+def wait_for_health(timeout=90, interval=5):
+    """Poll health until it passes or the timeout expires.
+
+    The timeout must exceed OSPF reconvergence time. Re-enabling an interface
+    starts a fresh adjacency (default hello 10s / dead 40s), so a correct change
+    can read UNHEALTHY for ~40-50s while the neighbor works up to Full. A short
+    window would roll back a good change mid-convergence; 90s gives roughly a 2x
+    margin so health is judged only after the network has had time to settle.
+    Changes that reach this stage already passed the gate's joint partition
+    pre-flight, so a longer wait only ever lets a legitimate change converge.
+    """
     deadline = time.time() + timeout
     last = None
     while time.time() < deadline:
